@@ -3,6 +3,7 @@ import cors from 'cors'
 import 'dotenv/config'
 import connectDB from './config/mongdb.js'
 import connectCloudinary from './config/cloudinary.js'
+import adminRouter from './routes/adminRoute.js'
 
 //app config
 const app=express()
@@ -18,6 +19,8 @@ app.use(cors()) //to connect frontend with backend
 
 
 //api end point
+
+app.use('/api/admin',adminRouter) // admin router
 app.get('/',(req,res)=>{
     res.send('API working')
 })
