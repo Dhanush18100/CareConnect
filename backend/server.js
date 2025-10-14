@@ -5,6 +5,7 @@ import connectDB from './config/mongdb.js'
 import connectCloudinary from './config/cloudinary.js'
 import adminRouter from './routes/adminRoute.js'
 import doctorRouter from './routes/doctorRoute.js'
+import userRouter from './routes/userRoutes.js'
 
 //app config
 const app=express()
@@ -23,7 +24,11 @@ app.use(cors()) //to connect frontend with backend
 
 app.use('/api/admin',adminRouter) // admin router
 
-app.use('/api/doctor',doctorRouter)
+app.use('/api/doctor',doctorRouter) 
+
+app.use('/api/user',userRouter)
+
+
 app.get('/',(req,res)=>{
     res.send('API working')
 })
