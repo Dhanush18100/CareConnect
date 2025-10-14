@@ -12,11 +12,9 @@ const AppContextProvider=(props)=>{
     const [doctors,setDoctors]=useState([])
 
 
-    const value={
-        doctors,
-        currencySymbol
+    const [token ,setToken]=useState(localStorage.getItem('token')?localStorage.getItem('token'):false) //Token from backend
 
-    }
+
 
     const getDoctorsData=async () => {
         try {
@@ -37,6 +35,14 @@ const AppContextProvider=(props)=>{
     useEffect(()=>{
         getDoctorsData()
     },[])
+
+     const value={
+        doctors,
+        currencySymbol,
+        token,setToken,
+        backendUrl
+
+    }
     return(
         <AppContext.Provider value={value}>
             {props.children}
