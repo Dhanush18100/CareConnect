@@ -10,7 +10,8 @@ const authUser=async (req,res,next) => {
 
         }
         const token_decode=jwt.verify(token ,process.env.JWT_SECRETE)
-       
+       if (!req.body) req.body = {};
+
         req.body.userId=token_decode.id //we will get user id from token and we add token to body
         
         next()

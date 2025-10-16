@@ -80,10 +80,10 @@ const loginUser = async (req, res) => {
 //API to get user profile data
 const getProfile = async (req, res) => {
     try {
-        const { userId } = req.body
+        const { userId } = req.body; 
         const userData = await userModel.findById(userId).select('-password')
 
-        res.json({ success: true, userData })
+        res.json({ success: true,userData })
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: error.message })
@@ -95,10 +95,9 @@ const getProfile = async (req, res) => {
 //Updating user profile
 const updateProfile = async (req, res) => {
     try {
-
-        const { userId, name, phone, address, dob, gender } = req.body;
+        const {userId,  name, phone, address, dob, gender } = req.body;
         const imageFile = req.file
-        if (!name || !phone || !address || !dob || !gender) {
+        if (!name || !phone  || !dob || !gender) {
             return res.json({ success: false, message: "Data missing" })
 
         }
