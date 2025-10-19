@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import {v2 as cloudinary} from 'cloudinary'
 import doctorModel from '../models/doctorModel.js'
 import appointmentModel from '../models/appointmentModel.js'
+import razorpay from 'razorpay'
 
 
 // api to register user
@@ -218,4 +219,47 @@ const cancelAppointment=async (req,res) => {
     }
     
 }
-export { registerUser, loginUser, getProfile ,updateProfile , bookAppointment,listAppointment, cancelAppointment}
+
+const razorpayInstance=new razorpay({
+    key_id:process.env.RAZORPAY_KEY_ID,
+    key_secret:process.env.RAZORPAY_KET_SECRETE,
+})
+//API to make payment using razor pay
+
+
+
+const paymentRazorPay=async (req,res) => {
+
+    try {
+        const{appointmentId}=req.body
+
+    const appointmentData=await appointmentId.findById(appointmentId)
+
+    if(!appointmentData || appointmentData.cancelled){
+        res.json({success:false,message:"Appointment cancled or not found"})
+
+    }
+
+    //creating options for razorpay payment
+
+    const options={
+        amount:appointmentData.amount*100,
+        currency:process.env.CURRENCY,
+        recipt:appointmentId,
+    }
+
+    // creating order
+
+    const order=await razorpayInstance.orders.create(options)
+
+    res.json({success:true,order})
+    
+        
+    } catch (error) {
+         console.log(error);
+        res.json({ success: false, message: error.message }) 
+        
+    }
+    
+}
+export { registerUser, loginUser, getProfile ,updateProfile , bookAppointment,listAppointment, cancelAppointment,paymentRazorPay}
