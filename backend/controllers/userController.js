@@ -222,7 +222,7 @@ const cancelAppointment=async (req,res) => {
 
 const razorpayInstance=new razorpay({
     key_id:process.env.RAZORPAY_KEY_ID,
-    key_secret:process.env.RAZORPAY_KET_SECRETE,
+    key_secret:process.env.RAZORPAY_KEY_SECRETE,
 })
 //API to make payment using razor pay
 
@@ -262,4 +262,18 @@ const paymentRazorPay=async (req,res) => {
     }
     
 }
-export { registerUser, loginUser, getProfile ,updateProfile , bookAppointment,listAppointment, cancelAppointment,paymentRazorPay}
+
+//API to verify payment of razorpay
+const verifyPazorPay=async (req,res) => {
+    try {
+       const {razorpay_order_id}=req.body
+       const orderInfo= await razorpayInstance.orders.fetch(razorpay_order_id)
+       console.log(orderInfo);
+        
+    } catch (error) {
+         console.log(error);
+        res.json({ success: false, message: error.message }) 
+    }
+    
+}
+export { registerUser, loginUser, getProfile ,updateProfile , bookAppointment,listAppointment, cancelAppointment,paymentRazorPay,verifyPazorPay}
