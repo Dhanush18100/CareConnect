@@ -4,13 +4,14 @@ import { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
+import useNavigate from 'react-router-dom'
 
 const MyAppointments = () => {
   const {backendUrl,token ,getDoctorsData}=useContext(AppContext)
 
   const [appointments,setAppointments]=useState([])
   const months=["","Jan","Feb","March","April","May","June","July","Aug","Sep","Oct","Nov","Dec"]
-
+  const navigate=useNavigate()
   const slotDateFormat=(slotDate)=>{
     const dateArray=slotDate.split('_')
     return dateArray[0]+" "+months[Number(dateArray[1])]+" "+ dateArray[2]
@@ -57,6 +58,19 @@ const MyAppointments = () => {
       receipt:order.receipt,
       handler:async (response) => {
         console.log(response);
+        try {
+          const {data}=await axios.post(backendUrl+'/api/user/verifyRazorPay',response,{headers:{token}})
+          if(data.success){
+            getUserAppointments()
+            navigate('/my-appointments')
+            
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error(error.message)
+          
+          
+        }
         
       }
     }
