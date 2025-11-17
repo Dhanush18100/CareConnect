@@ -1,0 +1,56 @@
+# 🔹 Node modules
+node_modules/
+**/node_modules/
+
+# 🔹 Build output
+dist/
+build/
+.vercel/
+
+# 🔹 Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 🔹 Environment variables
+.env
+.env.development
+.env.production
+.env.local
+frontend/.env
+backend/.env
+
+# 🔹 OS / Editor files
+.DS_Store
+Thumbs.db
+
+# 🔹 Vite cache
+.vite/
+frontend/.vite/
+
+# 🔹 Temporary files
+*.tmp
+*.log
+*.cache
+
+# 🔹 IDE folders
+.vscode/
+.idea/
+
+# 🔹 Production / server files
+backend/uploads/
+backend/tmp/
+
+# 🔹 Lock files (optional)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 🔹 TypeScript build (if used)
+*.tsbuildinfo
+
+# 🔹 Misc
+*.swp
+*.swo
